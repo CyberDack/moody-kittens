@@ -14,7 +14,7 @@
 <body>
   <header class="bg-dark d-flex align-items-center p-1 space-between">
     <img src="moody-logo.png" height="60" alt="Moody Kittens">
-    <form class="" onsubmit="addKitten(event)">
+    <form id=add-kitten class="hidden" onsubmit="addKitten(event)">
       <div class="d-flex">
         <input placeholder="Name" type="text" name="name" />
         <button class="btn-special" type="submit">
@@ -33,12 +33,13 @@
           <small>Good Luck and Have Fun!</small>
           <br>
           <button onclick="getStarted()">Get Started</button>
+          <div id="clear-kittens"></div>
         </div>
       </div>
     </div>
     <div class="p-2">
       <div id="kittens" class="d-flex align-items-center flex-wrap">
-        
+
       </div>
   </main>
   <footer class="card bg-dark text-light p-2 d-flex align-items-center justify-content-center">
