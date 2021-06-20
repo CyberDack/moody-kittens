@@ -83,8 +83,19 @@ function drawKittens(){
   let template = ""
   if(kittens.length > 0){
   kittens.forEach(kitten => {
-    if(kitten.mood == "gone"){
-      template += `
+    let hideButtons = ""
+    let goneButtons = ""
+      if(kitten.mood == "gone"){
+        hideButtons = "hidden";
+        goneButtons =
+        `
+        <p>
+          <p  class="text-light">You pet your kitten too hard, shame on you.</p>
+          <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
+        </p>
+        `;
+      }
+    template += `
       <div class="card p-2 text-center bg-dark m-2">
         <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
           <img class="kitten" src=${kitten.image} height="150" width="150" alt="Moody Kitten">
@@ -94,39 +105,15 @@ function drawKittens(){
           <div class="d-flex justify-content-center word"> Mood: ${kitten.mood}</div>
           <div class="d-flex justify-content-center word"> Affection: ${kitten.affection}</div>
         </div>
-        <div id="kitten-buttons">
-          <p>
-            <p  class="text-light">You pet your kitten too hard, shame on you.</p>
-            <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
-          </p>
+        <div id="kitten-buttons" class="${hideButtons}">
+          <button onclick="pet('${kitten.id}')">Pet</button>
+          <button onclick="catnip('${kitten.id}')">Catnip</button>
         </div>
+        ${goneButtons}
       </div>
       </div>
       `
     document.getElementById("kittens").innerHTML = template
-    } else{
-      template += `
-      <div class="card p-2 text-center bg-dark m-2">
-        <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
-          <img class="kitten" src=${kitten.image} height="150" width="150" alt="Moody Kitten">
-        </div>
-        <div class="mt-2 text-light">
-          <div class="d-flex justify-content-center word"> Name: ${kitten.name}</div>
-          <div class="d-flex justify-content-center word"> Mood: ${kitten.mood}</div>
-          <div class="d-flex justify-content-center word"> Affection: ${kitten.affection}</div>
-        </div>
-        <div id="kitten-buttons">
-            <button onclick="pet('${kitten.id}')">Pet</button>
-            <button onclick="catnip('${kitten.id}')">Catnip</button>
-          <p>
-            <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
-          </p>
-        </div>
-      </div>
-      </div>
-      `
-    document.getElementById("kittens").innerHTML = template
-    }
   })
   } else {
     document.getElementById("kittens").innerHTML = template
