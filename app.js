@@ -10,6 +10,7 @@ function ifKittens(){
   if (kittens.length > 0){
   document.getElementById("clear-kittens").innerHTML =
   `
+  <p>
   <button onclick="clearKittens()" class="btn-cancel">Clear ${kittens.length} Kittens</button>
   `;
   } else {
@@ -39,7 +40,7 @@ function addKitten(event) {
       id: generateId(),
       name: form.kittenName.value,
       image: `https://robohash.org/${form.kittenName.value}?set=set4`,
-      mood: "Tolerant",
+      mood: "tolerant",
       affection: 5,
     }
     kittens.push(newKitten)
@@ -78,37 +79,58 @@ function loadKittens() {
 /**
  * Draw all of the kittens to the kittens element
  */
-function drawKittens() {
+function drawKittens(){
   let template = ""
   if(kittens.length > 0){
   kittens.forEach(kitten => {
-    template += `
-
-    <div class="card p-2 text-center bg-dark m-2">
-    <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
-    <img class="kitten" src=${kitten.image} height="150" width="150" alt="Moody Kitten">
-    </div>
-    <div class="mt-2 text-light">
-
-      <div class="d-flex justify-content-center word"> Name: ${kitten.name}</div>
-      <div class="d-flex justify-content-center word"> Mood: ${kitten.mood}</div>
-      <div class="d-flex justify-content-center word"> Affection: ${kitten.affection}</div>
-    </div>
-
-    <div>
-          <button onclick="pet('${kitten.id}')">Pet</button>
-          <button onclick="catnip('${kitten.id}')">Catnip</button>
-      <div>
-          <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
+    if(kitten.mood == "gone"){
+      template += `
+      <div class="card p-2 text-center bg-dark m-2">
+        <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
+          <img class="kitten" src=${kitten.image} height="150" width="150" alt="Moody Kitten">
+        </div>
+        <div class="mt-2 text-light">
+          <div class="d-flex justify-content-center word"> Name: ${kitten.name}</div>
+          <div class="d-flex justify-content-center word"> Mood: ${kitten.mood}</div>
+          <div class="d-flex justify-content-center word"> Affection: ${kitten.affection}</div>
+        </div>
+        <div id="kitten-buttons">
+          <p>
+            <p  class="text-light">You pet your kitten too hard, shame on you.</p>
+            <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
+          </p>
+        </div>
       </div>
-    </div>
-    </div>
-    `
-  document.getElementById("kittens").innerHTML = template
+      </div>
+      `
+    document.getElementById("kittens").innerHTML = template
+    } else{
+      template += `
+      <div class="card p-2 text-center bg-dark m-2">
+        <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
+          <img class="kitten" src=${kitten.image} height="150" width="150" alt="Moody Kitten">
+        </div>
+        <div class="mt-2 text-light">
+          <div class="d-flex justify-content-center word"> Name: ${kitten.name}</div>
+          <div class="d-flex justify-content-center word"> Mood: ${kitten.mood}</div>
+          <div class="d-flex justify-content-center word"> Affection: ${kitten.affection}</div>
+        </div>
+        <div id="kitten-buttons">
+            <button onclick="pet('${kitten.id}')">Pet</button>
+            <button onclick="catnip('${kitten.id}')">Catnip</button>
+          <p>
+            <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
+          </p>
+        </div>
+      </div>
+      </div>
+      `
+    document.getElementById("kittens").innerHTML = template
+    }
   })
-} else {
-  document.getElementById("kittens").innerHTML = template
-}
+  } else {
+    document.getElementById("kittens").innerHTML = template
+  }
 }
 
 /**
