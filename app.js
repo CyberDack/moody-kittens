@@ -86,7 +86,7 @@ function drawKittens() {
 
     <div class="card p-2 text-center bg-dark m-2">
     <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
-    <img class="kitten" src=${kitten.image} height="150" width="150" alt="Missing Kitten">
+    <img class="kitten" src=${kitten.image} height="150" width="150" alt="Moody Kitten">
     </div>
     <div class="mt-2 text-light">
 
