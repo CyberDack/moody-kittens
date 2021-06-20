@@ -275,3 +275,7 @@ button.btn-special:hover{
 .hidden{
   display: none !important;
 }
+
+.word{
+  text-transform: capitalize;
+}

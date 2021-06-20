@@ -12,6 +12,8 @@ function ifKittens(){
   `
   <button onclick="clearKittens()" class="btn-cancel">Clear ${kittens.length} Kittens</button>
   `;
+  } else {
+    document.getElementById("clear-kittens").classList.add("hidden");
   }
 }
 
@@ -80,9 +82,9 @@ function drawKittens() {
     </div>
     <div class="mt-2 text-light">
 
-      <div class="d-flex justify-content-center"> Name: ${kitten.name}</div>
-      <div class="d-flex justify-content-center"> Mood: ${kitten.mood}</div>
-      <div class="d-flex justify-content-center"> Affection: ${kitten.affection}</div>
+      <div class="d-flex justify-content-center word"> Name: ${kitten.name}</div>
+      <div class="d-flex justify-content-center word"> Mood: ${kitten.mood}</div>
+      <div class="d-flex justify-content-center word"> Affection: ${kitten.affection}</div>
     </div>
 
     <div>
@@ -169,6 +171,7 @@ function getStarted() {
 function clearKittens(){
   kittens = []
   saveKittens()
+  ifKittens()
 }
 
 /**
