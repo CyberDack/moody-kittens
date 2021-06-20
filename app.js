@@ -1,31 +1,10 @@
-/**
- * Stores the list of kittens
- * @type {Kitten[]}
- */
+
 let kittens = [];
 loadKittens();
-ifKittens();
-
-function ifKittens(){
-  if (kittens.length > 0){
-  document.getElementById("clear-kittens").innerHTML =
-  `
-  <p>
-  <button onclick="clearKittens()" class="btn-cancel">Clear ${kittens.length} Kittens</button>
-  `;
-  } else {
-    document.getElementById("clear-kittens").classList.add("hidden");
-  }
-}
 
 /**
  * Called when submitting the new Kitten Form
- * This method will pull data from the form
- * use the provided function to give the data an id
- * you can use robohash for images
- * https://robohash.org/<INSERTCATNAMEHERE>?set=set4
- * then add that data to the kittens list.
- * Then reset the form
+ * This method will pull data from the form then reset the form
  */
 function addKitten(event) {
   event.preventDefault()
@@ -73,6 +52,8 @@ function loadKittens() {
   }
   if(!document.getElementById("welcome")){
     drawKittens();
+  } else{
+    drawClearKittens();
   }
 }
 
@@ -120,6 +101,20 @@ function drawKittens(){
   }
 }
 
+function drawClearKittens(){
+  if (kittens.length > 0){
+  document.getElementById("clear-kittens").innerHTML =
+  `
+  <p>
+  <button onclick="clearKittens()" class="btn-cancel">Clear ${kittens.length} Kittens</button>
+  `;
+  } else {
+    document.getElementById("clear-kittens").classList.add("hidden");
+  }
+}
+
+
+
 /**
  * Find the kitten in the array by its id
  * @param {string} id
@@ -139,14 +134,15 @@ function findKittenById(id) {
  * @param {string} id
  */
 function pet(id) {
-  let petRandom = Math.random()
-  let chosenKitten = findKittenById(id)
+  let petRandom = Math.random();
+  let chosenKitten = findKittenById(id);
   if (petRandom > 0.7){
     chosenKitten.affection += 1;
   } else{
     chosenKitten.affection -= 1;
   }
-  setKittenMood(chosenKitten)
+  
+  setKittenMood(chosenKitten);
 }
 
 /**
@@ -157,9 +153,9 @@ function pet(id) {
  * @param {string} id
  */
 function catnip(id) {
-  let chosenKitten = findKittenById(id)
+  let chosenKitten = findKittenById(id);
   chosenKitten.affection = 5;
-  setKittenMood(chosenKitten)
+  setKittenMood(chosenKitten);
 }
 
 /**
@@ -179,10 +175,8 @@ function setKittenMood(kitten) {
   }
   else{
     kitten.mood = "happy"
-  }
-
-  saveKittens()
-  drawKittens()
+  };
+  saveKittens();
 }
 
 function getStarted() {
@@ -193,7 +187,7 @@ function getStarted() {
 
 function deleteKitten(id){
   let kitten = kittens.indexOf(findKittenById(id));
-  console.log(kitten)
+  console.log(kitten);
   kittens.splice(kitten, 1);
   saveKittens();
 
@@ -201,9 +195,9 @@ function deleteKitten(id){
 
 
 function clearKittens(){
-  kittens = []
-  saveKittens()
-  ifKittens()
+  kittens = [];
+  saveKittens();
+  drawClearKittens();
 }
 
 /**
