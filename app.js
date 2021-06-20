@@ -29,17 +29,24 @@ function ifKittens(){
 function addKitten(event) {
   event.preventDefault()
   let form = event.target
+  let currentKitten = {}
 
-  let newKitten ={
-    id: generateId(),
-    name: form.name.value,
-    image: `https://robohash.org/${form.name.value}?set=set4`,
-    mood: "Tolerant",
-    affection: 5,
+  let kittenName = form.kittenName.value
+  currentKitten = kittens.find(kitten => kitten.name == kittenName)
+
+  if(!currentKitten){
+    let newKitten ={
+      id: generateId(),
+      name: form.kittenName.value,
+      image: `https://robohash.org/${form.kittenName.value}?set=set4`,
+      mood: "Tolerant",
+      affection: 5,
+    }
+    kittens.push(newKitten)
+    saveKittens()
+  } else {
+    window.alert("You can't have two cats with the same name!")
   }
-
-  kittens.push(newKitten)
-  saveKittens()
 
   form.reset()
 }
@@ -49,7 +56,7 @@ function addKitten(event) {
  * Saves the string to localstorage at the key kittens
  */
 function saveKittens() {
-  window.localStorage.setItem("kittens",JSON.stringify(kittens))
+  window.localStorage.setItem("kittens", JSON.stringify(kittens))
   drawKittens()
 }
 
@@ -73,10 +80,11 @@ function loadKittens() {
  */
 function drawKittens() {
   let template = ""
+  if(kittens.length > 0){
   kittens.forEach(kitten => {
     template += `
 
-    <div class="card p-2 text-center bg-dark m-1">
+    <div class="card p-2 text-center bg-dark m-2">
     <div class="card p-2 text-center bg-dark kitten ${kitten.mood}">
     <img class="kitten" src=${kitten.image} height="150" width="150" alt="Missing Kitten">
     </div>
@@ -90,11 +98,17 @@ function drawKittens() {
     <div>
           <button onclick="pet('${kitten.id}')">Pet</button>
           <button onclick="catnip('${kitten.id}')">Catnip</button>
+      <div>
+          <button class="btn-cancel" onclick="deleteKitten('${kitten.id}')">Delete</button>
+      </div>
     </div>
     </div>
     `
   document.getElementById("kittens").innerHTML = template
   })
+} else {
+  document.getElementById("kittens").innerHTML = template
+}
 }
 
 /**
@@ -167,6 +181,15 @@ function getStarted() {
   document.getElementById("add-kitten").classList.remove("hidden");
   loadKittens();
 }
+
+function deleteKitten(id){
+  let kitten = kittens.indexOf(findKittenById(id));
+  console.log(kitten)
+  kittens.splice(kitten, 1);
+  saveKittens();
+
+}
+
 
 function clearKittens(){
   kittens = []
